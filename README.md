@@ -1,4 +1,4 @@
-# expense_tracker
+# Expense_tracker
 
 A Flutter based Personal Expenses Tracker app
 
