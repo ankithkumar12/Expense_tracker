@@ -2,7 +2,6 @@ import 'package:expense_tracker/expense_list.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/new_expense.dart';
 import 'package:flutter/material.dart';
-import 'chart/chart.dart';
 
 class ExpenseTracker extends StatefulWidget {
   const ExpenseTracker({super.key});
@@ -31,25 +30,9 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
   }
 
   void removeExpense(Expense expense) {
-    final expenseIndex = registeredExpenses.indexOf(expense);
     setState(() {
       registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 3),
-        content: const Text('Expense deleted.'),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            setState(() {
-              registeredExpenses.insert(expenseIndex, expense);
-            });
-          },
-        ),
-      ),
-    );
   }
 
   void openOverlay() {
@@ -72,11 +55,10 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Chart(expenses: registeredExpenses),
-            // const Text("Hello"),
+            const Text("Hello"),
             Expanded(
                
                 child: ExpenseList(registeredExpenses,onDissmissed: removeExpense,)),

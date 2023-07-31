@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-
-
-
-import 'chart_bar.dart';
-import 'package:expense_tracker/models/expense_model.dart';
+import 'package:expense_tracker/widgets/chart/chart_bar.dart';
+import 'package:expense_tracker/models/expense.dart';
 
 class Chart extends StatelessWidget {
   const Chart({super.key, required this.expenses});
@@ -16,8 +13,7 @@ class Chart extends StatelessWidget {
       ExpenseBucket.forCategory(expenses, Category.food),
       ExpenseBucket.forCategory(expenses, Category.leisure),
       ExpenseBucket.forCategory(expenses, Category.travel),
-      ExpenseBucket.forCategory(expenses, Category.study),
-      ExpenseBucket.forCategory(expenses, Category.luxury),      
+      ExpenseBucket.forCategory(expenses, Category.work),
     ];
   }
 
@@ -79,7 +75,7 @@ class Chart extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: Icon(
-                        maticon[bucket.category],
+                        categoryIcons[bucket.category],
                         color: isDarkMode
                             ? Theme.of(context).colorScheme.secondary
                             : Theme.of(context)
