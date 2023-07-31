@@ -1,22 +1,18 @@
-import "package:expense_tracker/expense_tracker.dart";
-import "package:flutter/material.dart";
+import 'package:expense_tracker/widgets/expenses.dart';
+import 'package:flutter/material.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 156, 127, 224),
+  seedColor: const Color.fromARGB(255, 96, 59, 181),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 134, 76, 78),
+  seedColor: const Color.fromARGB(255, 27, 10, 50),
 );
-
-
-
-
-
 void main() {
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark().copyWith(
         useMaterial3: true,
         colorScheme: kDarkColorScheme,
@@ -34,7 +30,7 @@ void main() {
           ),
         ),
       ),
-      theme: ThemeData(useMaterial3: true).copyWith(
+      theme: ThemeData().copyWith(
         useMaterial3: true,
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
@@ -61,8 +57,7 @@ void main() {
               ),
             ),
       ),
-      // theme: ThemeData(useMaterial3: true),
-      home: const ExpenseTracker(),
+      home: const Expenses(),
     ),
   );
 }
