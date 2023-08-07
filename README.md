@@ -32,7 +32,7 @@ Here are some visual resources to help you better understand the app:
 
 ## Installation
 
-To run the ToDo App on your local machine, follow these steps:
+To run this app on your local machine, follow these steps:
 
 1. Ensure that you have Flutter and Dart installed on your system. For more information, visit the [Flutter installation guide](https://flutter.dev/docs/get-started/install).
 
