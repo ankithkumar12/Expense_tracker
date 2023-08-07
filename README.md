@@ -6,7 +6,6 @@ This is a Expenses Tracker App developed using the Flutter framework. The applic
 
 - **Category-wise classification**: Register or delete expenses according to various categories.
 - **Full info**: Keeps track of expense amount,date on which expense was made and category of expense.
-- **No.of classes**: Provides count of number of classess attended of total no of classes.
 - **Chart-wise analysis**: Analyses in a bar chart showing different expenses category wise.
 
 
