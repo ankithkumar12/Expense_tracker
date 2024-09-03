@@ -42,9 +42,6 @@ class DatabaseService {
   }
 
   void insertExpense(Expense expense) async {
-    print("here");
-    print(expense.date.toString().runtimeType);
-
     var db = await openDatabase(await getPath());
     await db.execute(
         // '''INSERT INTO $expensesTable($expenseName,$expenseAmount,$expenseDate,$expenseCategory) VALUES(${expense.title},${expense.amount},${expense.date.toString()},${expense.category.name})'''
@@ -56,5 +53,11 @@ class DatabaseService {
           expense.date.toString(),
           expense.category.name
         ]);
+  }
+
+  void deleteExpense(int expenseID) async {
+    var db = await openDatabase(await getPath());
+    await db.rawDelete(
+        '''DELETE FROM $expensesTable WHERE $expenseID = ?''', [expenseID]);
   }
 }

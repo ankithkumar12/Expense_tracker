@@ -91,10 +91,11 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
-    final expenseIndex = _registeredExpenses.indexOf(expense);
-    setState(() {
-      _registeredExpenses.remove(expense);
-    });
+    // final expenseIndex = _registeredExpenses.indexOf(expense);
+    // setState(() {
+    // _registeredExpenses.remove(expense);
+    DatabaseService.instance.deleteExpense(expense.id!);
+    // });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -103,13 +104,15 @@ class _ExpensesState extends State<Expenses> {
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {
-            setState(() {
-              _registeredExpenses.insert(expenseIndex, expense);
-            });
+            // setState(() {
+            DatabaseService.instance.insertExpense(expense);
+            getData();
+            // });
           },
         ),
       ),
     );
+    getData();
   }
 
   @override
