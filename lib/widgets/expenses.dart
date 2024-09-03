@@ -4,6 +4,10 @@ import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
+import 'package:sqflite/sqflite.dart';
+
+import "../services/database_service.dart";
+
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
@@ -15,6 +19,32 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    createDatabase();
+    checkEmpty();
+  }
+
+  void createDatabase() async {
+    await DatabaseService.instance.database;
+  }
+
+  void checkEmpty() async {
+    var path = await getPath();
+    var db = await openDatabase(path);
+
+    final rows = await db.query('Expenses');
+
+    if (rows.isEmpty) {
+      setState(() {
+        // child = UserScreen(onSuccess: changeToInitialSync);
+      });
+    } else {
+      // changeToMainScreen();
+    }
+  }
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
