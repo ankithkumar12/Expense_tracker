@@ -55,9 +55,25 @@ class DatabaseService {
         ]);
   }
 
+  void reinsertExpense(Expense expense) async {
+    print("In resert function");
+    var db = await openDatabase(await getPath());
+    await db.execute(
+        // '''INSERT INTO $expensesTable($expenseName,$expenseAmount,$expenseDate,$expenseCategory) VALUES(${expense.title},${expense.amount},${expense.date.toString()},${expense.category.name})'''
+        '''INSERT INTO $expensesTable($expenseID,$expenseName,$expenseAmount,$expenseDate,$expenseCategory) 
+       VALUES(?,?, ?, ?, ?)''',
+        [
+          expense.id,
+          expense.title,
+          expense.amount,
+          expense.date.toString(),
+          expense.category.name
+        ]);
+  }
+
   void deleteExpense(int expenseID) async {
     var db = await openDatabase(await getPath());
-    await db.rawDelete(
-        '''DELETE FROM $expensesTable WHERE $expenseID = ?''', [expenseID]);
+    await db
+        .rawDelete('''DELETE FROM $expensesTable WHERE id = ?''', [expenseID]);
   }
 }

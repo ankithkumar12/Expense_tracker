@@ -52,6 +52,13 @@ class _ExpensesState extends State<Expenses> {
               category: mapCategory[expense['category'] as String] as Category,
               date: (expense['date'] as String).stringToDateTime()))
           .toList();
+      // print("Before Sorting");
+      // _registeredExpenses.forEach((expense) => print(expense.id));
+
+      // _registeredExpenses.sort((a, b) => a.id!.compareTo(b.id!));
+
+      // print("After Sorting");
+      // _registeredExpenses.forEach((expense) => print(expense.id));
     });
   }
 
@@ -99,13 +106,13 @@ class _ExpensesState extends State<Expenses> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 60),
         content: const Text('Expense deleted.'),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () {
             // setState(() {
-            DatabaseService.instance.insertExpense(expense);
+            DatabaseService.instance.reinsertExpense(expense);
             getData();
             // });
           },
