@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
@@ -18,13 +21,31 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses = [];
+  List<Expense> _registeredExpenses = [];
 
   @override
   void initState() {
     super.initState();
     createDatabase();
     checkEmpty();
+    getData();
+  }
+
+  void getData() async {
+    var db = await openDatabase(await getPath());
+    final expenses = await db.query(DatabaseService.instance.expensesTable);
+
+    print(expenses);
+
+    setState(() {
+      _registeredExpenses = expenses
+          .map((expense) => Expense(
+              title: expense['expenseName'] as String,
+              amount: expense['expenseAmount'] as double,
+              category: expense['expenseCategory'] as Category,
+              date: expense['expenseDate'] as DateTime))
+          .toList();
+    });
   }
 
   void createDatabase() async {
@@ -54,10 +75,11 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 
-  void _addExpense(Expense expense) {
-    setState(() {
-      _registeredExpenses.add(expense);
-    });
+  void _addExpense(Expense expense) async {
+    DatabaseService.instance.insertExpense(expense);
+    // setState(() {
+    //   _registeredExpenses.add(expense);
+    // });
   }
 
   void _removeExpense(Expense expense) {

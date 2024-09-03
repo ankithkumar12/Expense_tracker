@@ -1,3 +1,4 @@
+import 'package:expense_tracker/models/expense.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -34,9 +35,26 @@ class DatabaseService {
       version: _databaseVersion,
       onCreate: (db, version) {
         db.execute(
-          '''CREATE TABLE $expensesTable($expenseID INTEGER PRIMARY KEY, $expenseName TEXT NOT NULL,$expenseAmount REAL NOT NULL,$expenseDate INT NOT NULL,$expenseCategory INT NOT NULL)''',
+          '''CREATE TABLE $expensesTable($expenseID INTEGER PRIMARY KEY, $expenseName TEXT NOT NULL,$expenseAmount REAL NOT NULL,$expenseDate TEXT NOT NULL,$expenseCategory TEXT NOT NULL)''',
         );
       },
     );
+  }
+
+  void insertExpense(Expense expense) async {
+    print("here");
+    print(expense.date.toString().runtimeType);
+
+    var db = await openDatabase(await getPath());
+    await db.execute(
+        // '''INSERT INTO $expensesTable($expenseName,$expenseAmount,$expenseDate,$expenseCategory) VALUES(${expense.title},${expense.amount},${expense.date.toString()},${expense.category.name})'''
+        '''INSERT INTO $expensesTable($expenseName,$expenseAmount,$expenseDate,$expenseCategory) 
+       VALUES(?, ?, ?, ?)''',
+        [
+          expense.title,
+          expense.amount,
+          expense.date.toString(),
+          expense.category.name
+        ]);
   }
 }
