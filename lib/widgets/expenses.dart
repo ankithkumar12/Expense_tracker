@@ -1,15 +1,21 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
+import '../extensions/stringExtension.dart';
 
 import 'package:sqflite/sqflite.dart';
 
 import "../services/database_service.dart";
+
+var mapCategory = {
+  'food': Category.food,
+  'leisure': Category.leisure,
+  'luxury': Category.luxury,
+  'travel': Category.travel,
+  'work': Category.work,
+};
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -40,10 +46,11 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses = expenses
           .map((expense) => Expense(
-              title: expense['expenseName'] as String,
-              amount: expense['expenseAmount'] as double,
-              category: expense['expenseCategory'] as Category,
-              date: expense['expenseDate'] as DateTime))
+              id: expense['id'] as int,
+              title: expense['title'] as String,
+              amount: expense['amount'] as double,
+              category: mapCategory[expense['category'] as String] as Category,
+              date: (expense['date'] as String).stringToDateTime()))
           .toList();
     });
   }
@@ -80,6 +87,7 @@ class _ExpensesState extends State<Expenses> {
     // setState(() {
     //   _registeredExpenses.add(expense);
     // });
+    getData();
   }
 
   void _removeExpense(Expense expense) {
