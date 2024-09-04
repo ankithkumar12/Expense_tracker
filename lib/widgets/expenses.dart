@@ -3,10 +3,9 @@ import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
-import '../extensions/stringExtension.dart';
-
 import 'package:sqflite/sqflite.dart';
 
+import '../extensions/stringExtension.dart';
 import "../services/database_service.dart";
 
 var mapCategory = {
@@ -40,7 +39,6 @@ class _ExpensesState extends State<Expenses> {
   void getData() async {
     var db = await openDatabase(await getPath());
     final expenses = await db.query(DatabaseService.instance.expensesTable);
-
 
     setState(() {
       _registeredExpenses = expenses
@@ -120,7 +118,10 @@ class _ExpensesState extends State<Expenses> {
       child: Column(
         children: [
           Image.asset("assets/images/shopping.png"),
-          const Text('No expenses found. Start adding some!'),
+          Text(
+            'No expenses found. Start adding some!',
+            style: TextStyle(fontStyle: FontStyle.italic,fontSize: 20),
+          ),
         ],
       ),
     );
