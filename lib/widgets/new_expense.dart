@@ -104,6 +104,7 @@ class _NewExpenseState extends State<NewExpense> {
               const SizedBox(width: 16),
               Expanded(
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -111,7 +112,9 @@ class _NewExpenseState extends State<NewExpense> {
                         _selectedDate == null
                             ? 'No date selected'
                             : formatter.format(_selectedDate!),
-                        style: const TextStyle(fontSize: 11)),
+                        style: const TextStyle(fontSize: 11,),
+                        overflow: TextOverflow.clip,
+                        ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(
