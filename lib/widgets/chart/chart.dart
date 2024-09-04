@@ -1,3 +1,4 @@
+import 'package:expense_tracker/extensions/stringExtension.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/chart/chart_bar.dart';
 import 'package:flutter/material.dart';
@@ -74,14 +75,22 @@ class Chart extends StatelessWidget {
                   (bucket) => Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Icon(
-                        categoryIcons[bucket.category],
-                        color: isDarkMode
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.7),
+                      child: Column(
+                        children: [
+                          Icon(
+                            categoryIcons[bucket.category],
+                            color: isDarkMode
+                                ? Theme.of(context).colorScheme.secondary
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.7),
+                          ),
+                          Text(
+                            bucket.category.name.capitalize(),
+                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          )
+                        ],
                       ),
                     ),
                   ),
