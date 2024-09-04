@@ -41,7 +41,6 @@ class _ExpensesState extends State<Expenses> {
     var db = await openDatabase(await getPath());
     final expenses = await db.query(DatabaseService.instance.expensesTable);
 
-    print(expenses);
 
     setState(() {
       _registeredExpenses = expenses
@@ -52,13 +51,6 @@ class _ExpensesState extends State<Expenses> {
               category: mapCategory[expense['category'] as String] as Category,
               date: (expense['date'] as String).stringToDateTime()))
           .toList();
-      // print("Before Sorting");
-      // _registeredExpenses.forEach((expense) => print(expense.id));
-
-      // _registeredExpenses.sort((a, b) => a.id!.compareTo(b.id!));
-
-      // print("After Sorting");
-      // _registeredExpenses.forEach((expense) => print(expense.id));
     });
   }
 

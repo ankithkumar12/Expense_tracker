@@ -26,7 +26,6 @@ class _NewExpenseState extends State<NewExpense> {
     );
     setState(() {
       selectedDate = pickedDate;
-      //print(selectedDate);
     });
   }
 
@@ -123,7 +122,6 @@ class _NewExpenseState extends State<NewExpense> {
                     if (value == null) return;
                     setState(() {
                       selectedCategory = value;
-                      //print(selectedCategory);
                     });
                   }),
               TextButton(
