@@ -15,18 +15,31 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime? _selectedDate;
+  DateTime? _selectedDate = DateTime.now();
+
   Category _selectedCategory = Category.leisure;
 
   void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
-    final pickedDate = await showDatePicker(
+
+    var pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: firstDate,
       lastDate: now,
     );
+
+    final pickedTime =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+    pickedDate = pickedDate!.copyWith(
+        year: pickedDate.year,
+        month: pickedDate.month,
+        day: pickedDate.day,
+        hour: pickedTime!.hour,
+        minute: pickedTime.minute);
+
     setState(() {
       _selectedDate = pickedDate;
     });
@@ -59,7 +72,6 @@ class _NewExpenseState extends State<NewExpense> {
 
     widget.onAddExpense(
       Expense(
-        
         title: _titleController.text,
         amount: enteredAmount,
         date: _selectedDate!,
@@ -78,6 +90,7 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    print(_selectedDate);
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
@@ -109,12 +122,14 @@ class _NewExpenseState extends State<NewExpense> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                        _selectedDate == null
-                            ? 'No date selected'
-                            : formatter.format(_selectedDate!),
-                        style: const TextStyle(fontSize: 11,),
-                        overflow: TextOverflow.clip,
-                        ),
+                      _selectedDate == null
+                          ? 'No date selected'
+                          : "${monthDateFormatter.format(_selectedDate!)} ${(dayFormatter.format(_selectedDate!)).substring(0, 3)} ${timeFormatter.format(_selectedDate!)}",
+                      style: const TextStyle(
+                        fontSize: 11,
+                      ),
+                      overflow: TextOverflow.clip,
+                    ),
                     IconButton(
                       onPressed: _presentDatePicker,
                       icon: const Icon(

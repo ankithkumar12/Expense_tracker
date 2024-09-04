@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-final formatter = DateFormat.MMMEd();
+final monthDateFormatter = DateFormat.MMMd();
+final dayFormatter = DateFormat.EEEE();
+final timeFormatter = DateFormat().add_jm();
 
 const uuid = Uuid();
 
@@ -32,7 +34,11 @@ class Expense {
   final Category category;
 
   String get formattedDate {
-    return formatter.format(date);
+    return "${monthDateFormatter.format(date)} ${dayFormatter.format(date).substring(0, 3)}";
+  }
+
+  String get formattedTime {
+    return timeFormatter.format(date);
   }
 }
 
